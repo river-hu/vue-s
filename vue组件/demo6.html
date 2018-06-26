@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件-通过插槽分发</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p :style="{'font-size':fz+'px'}">子组件修改父组件的内容</p>
+        <div id="commpontent">
+            <box>123</box>
+        </div>
+    </div>
+    <script>
+                Vue.component('box', {//slot标签为插槽，获取自定义标签内的内容，将内容放置在组件模板的相应的位置
+                    template: `
+                    <div class="demo-alert-box">
+                        <strong>Error!</strong>
+                        <slot></slot> <slot></slot>
+                    </div>
+                    `
+                })
+       var vm= new Vue({
+            el:'#app',
+            data:{
+                test:'test',
+                fz:18
+            },
+            methods:{
+                fun:function(sr){
+                    this.fz=sr;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
