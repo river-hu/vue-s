@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>嵌套路由</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/green" tag="li">green</router-link>
+        <router-link to="/fruit" tag="li">fruit</router-link>
+    <router-view></router-view>
+    </div>
+    <template id="green">
+    <div>蔬菜
+        <router-link to="/green/organic">有机</router-link>
+        <router-link to="/green/inorganic">无机</router-link>
+        <router-view></router-view>
+    </div>
+    </template>
+    <template id="fruit">
+    <div>水果
+        <router-link to="/fruit/sweet">甜的</router-link>
+        <router-link to="/fruit/acid">酸的</router-link>
+        <router-view></router-view>
+    </div>
+    </template>
+    <script>
+        //如果使用模块化机制编程，导入vue和vueRouter，要调用vue.use(vueRouter)
+        //定义路由组件
+        //可以从其他文件import进来
+        let green = { template: '#green' }
+        let organic = { template: "<div>有机蔬菜organic</div>" }
+        let inorganic = { template: "<div>无机蔬菜inorganic</div>" }
+        let fruit = { template: '#fruit' }
+        let sweet = { template: "<div>甜的</div>" }
+        let acid = { template: "<div>酸的</div>" }
+
+        //定义路由
+        //每个路由应该映射一个组件。其中的“component”可以是
+        //通过vue.extend()创建的组件构造器，
+        //或者，只是一个组件配置对象
+        //还可以是嵌套路由
+        const routes = [{
+            path: '',
+            component: green
+        },
+        {
+            path: "/green",
+            component: green,
+            children: [
+                {
+                    path: "",
+                    component: organic
+                },
+                {
+                    path: "organic",
+                    component: organic
+                },
+                {
+                    path: "inorganic",
+                    component: inorganic
+                }
+            ]
+        },
+        {
+            path: "/fruit",
+            component: fruit,
+            children: [
+                {
+                    path: "",
+                    component: sweet
+                },
+                {
+                    path: "sweet",
+                    component: sweet
+                },
+                {
+                    path: "acid",
+                    component: acid
+                }
+            ]
+
+        },
+        //所有没有找到时候，去地址/green的组件
+        {
+            path: "*",
+            redirect: '/green'
+        }
+
+        ]
+        //创建router实例，然后传routes配置
+        const router = new VueRouter({
+            routes
+        })
+        // 创建和挂载根实例
+        //通过router配置参数注入路由
+        //从而让整个应用都有路由功能
+        const app = new Vue({
+            router
+        }).$mount('#app')
+
+    </script>
+</body>
+
+</html>
