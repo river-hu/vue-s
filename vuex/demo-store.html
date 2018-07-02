@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vuex-state</title>
+    <script src="../js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="commpontent">
+            <button-my :title="test"></button-my>
+            <button-my :title="test"></button-my>
+        </div>
+        <button @click="add">+</button>
+        <span>{{count}}</span>
+        <button @click="del">-</button>
+    </div>
+  
+    <script>
+        //组件复用data必须是个函数，且数据被return出来，这样组件之间才不会被影响
+        Vue.component('button-my',{
+            data:function(){
+                return {
+                }
+            },
+            computed:{
+                count(){
+                    return this.$store.state.count;
+                }
+            },
+            methods:{
+                add(){
+                    store.commit('increment');
+                }
+            },
+            props:['title'],
+            template:'<div><button @click="add">you {{count}} </button> <p>{{title}}</p> </div>'
+        })
+        const store = new Vuex.Store({
+            state:{
+                count:0
+            },
+            mutations:{
+                increment(state){
+                    state.count++;
+                },
+                towo(state){
+                    state.count--;
+                }
+            }
+        })
+       
+        console.log(store.state.count);
+        var vm = new Vue({
+            el:'#app',
+            store,
+            data:{
+                test:'test123131312',    
+            },
+            computed:{
+                count:function(){
+                    return store.state.count;
+                }
+            },
+            methods:{
+                add(){
+                    store.commit('increment');
+                },
+                del(){
+                    store.commit('towo');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

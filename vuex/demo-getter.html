@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vuex-getter</title>
+    <script src="../js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="commpontent">
+            <button-my :title="test"></button-my>
+            <button-my :title="test"></button-my>
+        </div>
+        <button @click="add">+</button>
+        <span>{{count}}</span>
+        <button @click="del">-</button>
+    </div>
+
+    <script>
+        Vue.component('button-my', {
+            data: function () {
+                return {
+                    header: 0
+                }
+            },
+            computed: {
+                count() {
+                    return this.$store.state.count;
+                },
+                text() {
+                    return this.$store.getters.donefind(this.title).text
+                }
+            },
+            methods: {
+                add() {
+                    store.commit('increment');
+                }
+            },
+            props: ['title'],
+            created() {
+                this.header = this._props.title;
+                console.log(this.title);
+            },
+            template: '<div><button @click="add">you {{count}} </button> <p>{{title}}</p> {{text}} </div>'
+        })
+        const store = new Vuex.Store({
+            state: {
+                count: 0,
+                todo: [
+                    {
+                        id: 1, text: "test", done: true
+                    },
+                    {
+                        id: 2, text: "test too", done: false
+                    }
+                ]
+            },
+            getters: {
+                donetool: state => {
+                    return state.todo.filter(todo => todo.done)
+                },
+                donefind: state => (id) => {
+                    return state.todo.find(todo => todo.id === id)
+                }
+            },
+            mutations: {
+                increment(state) {
+                    state.count++;
+                },
+                towo(state) {
+                    state.count--;
+                }
+            }
+        })
+
+        console.log(store.getters);
+        var vm = new Vue({
+            el: '#app',
+            store,
+            data: {
+                test: 1,
+            },
+            computed: {
+                count: function () {
+                    return store.state.count;
+                }
+            },
+            methods: {
+                add() {
+                    store.commit('increment');
+                },
+                del() {
+                    store.commit('towo');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
