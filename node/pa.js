@@ -17,7 +17,6 @@ superagent.get(reptileUrl).end(function (err, res) {
     let data = [];
 
     $('h4').each(function (i, elem) {
-        // 拿到当前li标签下所有的内容，开始干活了
         let _this = $(elem);
         data.push({
             title: filter(_this.text()),
