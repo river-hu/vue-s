@@ -1,0 +1,24 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "demo.js",
+  "dependencies": {
+    "async": "^2.6.1",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "express-generator": "^4.16.0",
+    "fs": "^0.0.1-security",
+    "mkdirp": "^0.5.1",
+    "mysql": "^2.16.0",
+    "request": "^2.87.0",
+    "sql": "^0.78.0",
+    "superagent": "^3.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "raziel_hu",
+  "license": "ISC"
+}

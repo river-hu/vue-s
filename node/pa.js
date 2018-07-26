@@ -16,14 +16,30 @@ superagent.get(reptileUrl).end(function (err, res) {
     let $ = cheerio.load(res.text);
     let data = [];
 
-    $('h4').each(function (i, elem) {
+    $('.codelist-desktop').each(function (i, elem) {
         let _this = $(elem);
+    
+        let datafun = (dom)=>{
+            let data = [];
+            dom.find("h4").each(function (i, elem) {
+                data.push({
+                    title: filter($(elem).text()),
+                    url: addurl($(elem).parent(".item-top").attr("href")),
+                    dec:$(elem).siblings("strong").text()
+                });
+            })
+
+            return data;
+        }
+        datac = datafun(_this);
         data.push({
-            title: filter(_this.text()),
-            url: addurl(_this.parent(".item-top").attr("href")),
-            dec:_this.siblings("strong").text()
+            title: filter(_this.children("h2").text()),
+            data:datac,
+            id:i
         });
+        
     });
+    
     fs.writeFile(__dirname + '\\article.json', JSON.stringify({
         status: 0,
         data: data

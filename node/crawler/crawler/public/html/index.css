@@ -1,0 +1,16 @@
+.app{
+    width: 100%;
+    max-width: 900px;
+    margin: 50px auto;
+    font-size: 18px;
+    display: flex;
+
+}
+.title{
+    width: 100%;
+    border: 5px solid #FF9800;
+    height: 200px;
+}
+.center{
+    text-align: center;
+}
