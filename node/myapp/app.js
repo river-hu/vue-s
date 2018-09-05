@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -8,6 +9,8 @@ var usersRouter = require('./routes/users');
 var postRouter = require('./routes/post');
 var byidRouter = require('./routes/byid');
 var getRouter = require('./routes/gettest');
+var socket = require('./routes/socket');
+var selectname = require('./routes/selectname');
 
 // const Op = Sequelize.Op;
 
@@ -77,6 +80,9 @@ app.use('/users', usersRouter);
 app.use('/post', postRouter);
 app.use('/byid', byidRouter);
 app.use('/gettest', getRouter);
+app.use('/socket', socket);
+app.use('/selectname', selectname);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

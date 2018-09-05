@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>冒泡排序</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        box{
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        .dis-box{
+            width: 530px;
+            margin: 10px auto;
+            height: 550px;
+            position: relative;
+            border: 5px solid #795548;
+            padding: 10px;
+            padding-left: 20px;
+            padding-top: 5px;
+        }
+        .list{
+            height: 50px;
+            position: absolute;
+            transition: all .1s linear;
+            background: #e1e1e1;
+            border: 3px solid #f44336;
+            box-sizing: border-box;
+            font-size: 30px;
+            line-height: 46px;
+            padding-left: 5px;
+            left:5px;
+        }
+        .list span{
+            position: relative;
+            left: -80px;
+        }
+    </style>
+</head>
+<body>
+   <h1>冒泡排序</h1>
+   <div class="box">
+    <div class="dis-box">
+        
+    </div>
+   </div>
+   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+   <script>
+     var arr = [];
+     var exal = [];
+    
+     for(var i=0;i<10;i++){    //生成随机数
+         arr.push(Math.floor(Math.random()*100))
+         $(`<div class="list" top="${i*55}px" style="width:${arr[i]*5}px;top:${i*55}px;">
+                <span>${arr[i]}</span>
+        </div>`).appendTo(".dis-box")
+     }
+     var index=0;
+     var len = arr.length;
+     console.log(arr)
+     dis(); //排序函数
+     console.log(arr)
+    
+     function dis(){
+       var j = 0;
+       cdis();  //嵌套内部循环
+       function cdis(){
+        if(arr[j]>arr[j+1]){
+            var temp = arr[j]; //数据交换
+            arr[j]= arr[j+1]
+            arr[j+1]= temp;
+            console.log(j)
+            exal.push(` var tempcss=$("[top='${(j+1)*55}px']"); 
+            $("[top='"+${j*55}+"px']").css("top",${(j+1)*55}+"px").attr("top",${(j+1)*55}+"px")
+            tempcss.css("top",${j*55}+"px").attr("top",${j*55}+"px")`) //存储交换效果指令
+           
+        }
+        j++;
+        if(j<len-index){ //内层循环终止指令
+            cdis();
+        }
+       }
+        index++;
+        if(index<len){ //外层循环终止指令
+            dis()
+        }
+   }
+   var di=0; //效果显示计数
+   dly()  //效果演示函数
+   function dly(){
+       setTimeout(function(){ //延时显示交换效果
+        if(exal[di]){
+            eval(exal[di])
+            di++;
+            dly()
+        }else{
+            return;
+        }
+       },1000)
+   }
+
+   </script>
+</body>
+
+</html>
